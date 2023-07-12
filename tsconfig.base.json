@@ -542,6 +542,9 @@
       "@island.is/clients/smartsolutions": [
         "libs/clients/smartsolutions/src/index.ts"
       ],
+      "@island.is/clients/license-client": [
+        "libs/clients/license-client/src/index.ts"
+      ],
       "@island.is/clients/syslumenn": ["libs/clients/syslumenn/src/index.ts"],
       "@island.is/clients/transport-authority/digital-tachograph-drivers-card": [
         "libs/clients/transport-authority/digital-tachograph-drivers-card/src/index.ts"
