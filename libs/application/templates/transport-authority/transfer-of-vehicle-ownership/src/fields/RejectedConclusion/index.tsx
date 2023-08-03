@@ -9,18 +9,26 @@ import {
   Text,
   Button,
   Link,
+  LinkV2,
 } from '@island.is/island-ui/core'
 import { useLocale } from '@island.is/localization'
 import { FC } from 'react'
 import { conclusion } from '../../lib/messages'
 import { Rejecter } from '../../shared'
 import kennitala from 'kennitala'
+import { useRouter } from 'next/router'
 
 export const RejectedConclusion: FC<FieldBaseProps> = (props) => {
   const { application } = props
   const { formatMessage } = useLocale()
+  const router = useRouter()
 
   const rejecter = getValueViaPath(application.answers, 'rejecter') as Rejecter
+
+  console.log(
+    'a',
+    `${document.location.origin}/umsoknir/${ApplicationConfigurations.TransferOfVehicleOwnership.slug}/`,
+  )
 
   return (
     <Box>
@@ -53,13 +61,13 @@ export const RejectedConclusion: FC<FieldBaseProps> = (props) => {
       </Box>
 
       <Box display="flex" justifyContent="flexEnd" marginTop={8}>
-        <Link
-          href={`${document.location.origin}/umsoknir/${ApplicationConfigurations.TransferOfVehicleOwnership.slug}/`}
-        >
-          <Button>
-            {formatMessage(conclusion.rejected.startNewApplication)}
-          </Button>
-        </Link>
+        <a href="http://localhost:4242/umsoknir/eigendaskipti-okutaekis">
+          {formatMessage(conclusion.rejected.startNewApplication)}
+        </a>
+        {/* <Button onClick={() => console.log('asdfs')}>asdf</Button> */}
+        <LinkV2 href="http://localhost:4242/umsoknir/eigendaskipti-okutaekis">
+          asdf
+        </LinkV2>
       </Box>
     </Box>
   )

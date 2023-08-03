@@ -43,6 +43,7 @@ export const LinkV2: React.FC<LinkProps> = ({
   ...linkProps
 }) => {
   const isInternal = !shouldLinkOpenInNewWindow(href as string)
+  console.log('isinternal?', isInternal)
   const classNames = cn(
     styles.link,
     color ? styles.colors[color] : undefined,
