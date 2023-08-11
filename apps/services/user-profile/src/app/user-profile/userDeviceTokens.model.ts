@@ -16,7 +16,7 @@ import {
     },
   ],
 })
-export class UserDeviceTokens extends Model<UserDeviceTokens> {
+export class UserDeviceTokens extends Model {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
