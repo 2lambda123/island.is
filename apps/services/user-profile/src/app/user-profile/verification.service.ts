@@ -256,72 +256,74 @@ export class VerificationService {
   }
 
   async sendConfirmationEmail(verification: EmailVerification) {
-    try {
-      await this.emailService.sendEmail({
-        from: {
-          name: environment.email.fromName,
-          address: environment.email.fromEmail,
-        },
-        to: [
-          {
-            name: '',
-            address: verification.email,
+    if (environment.email.fromName && environment.email.fromEmail) {
+      try {
+        await this.emailService.sendEmail({
+          from: {
+            name: environment.email.fromName,
+            address: environment.email.fromEmail,
           },
-        ],
-        subject: `Staðfesting á netfangi á Ísland.is`,
-        template: {
-          title: 'Staðfesting á netfangi',
-          body: [
+          to: [
             {
-              component: 'Image',
-              context: {
-                src: join(__dirname, `./assets/images/logois.jpg`),
-                alt: 'Ísland.is logo',
-              },
-            },
-            {
-              component: 'Heading',
-              context: {
-                copy: 'Staðfesting á netfangi',
-                small: true,
-              },
-            },
-            {
-              component: 'Heading',
-              context: {
-                copy: '',
-                small: true,
-                eyebrow: 'Email confirmation',
-              },
-            },
-            {
-              component: 'Copy',
-              context: { copy: 'Öryggiskóði / Security code', small: true },
-            },
-            {
-              component: 'Heading',
-              context: { copy: verification.hash },
-            },
-            {
-              component: 'Copy',
-              context: {
-                copy:
-                  'Þetta er öryggiskóði til staðfestingar á netfangi, hann eyðist sjálfkrafa eftir 5 mínútur. Vinsamlegst hunsaðu póstinn ef þú varst ekki að skrá netfangið þitt á Mínum síðum.',
-              },
-            },
-            {
-              component: 'Copy',
-              context: {
-                small: true,
-                copy:
-                  'This is your security code to verify your email address, it will be deleted automatically after 5 minutes. Please ignore this email if you did not enter your email address on My pages.',
-              },
+              name: '',
+              address: verification.email,
             },
           ],
-        },
-      })
-    } catch (exception) {
-      this.logger.error(exception)
+          subject: `Staðfesting á netfangi á Ísland.is`,
+          template: {
+            title: 'Staðfesting á netfangi',
+            body: [
+              {
+                component: 'Image',
+                context: {
+                  src: join(__dirname, `./assets/images/logois.jpg`),
+                  alt: 'Ísland.is logo',
+                },
+              },
+              {
+                component: 'Heading',
+                context: {
+                  copy: 'Staðfesting á netfangi',
+                  small: true,
+                },
+              },
+              {
+                component: 'Heading',
+                context: {
+                  copy: '',
+                  small: true,
+                  eyebrow: 'Email confirmation',
+                },
+              },
+              {
+                component: 'Copy',
+                context: { copy: 'Öryggiskóði / Security code', small: true },
+              },
+              {
+                component: 'Heading',
+                context: { copy: verification.hash },
+              },
+              {
+                component: 'Copy',
+                context: {
+                  copy:
+                    'Þetta er öryggiskóði til staðfestingar á netfangi, hann eyðist sjálfkrafa eftir 5 mínútur. Vinsamlegst hunsaðu póstinn ef þú varst ekki að skrá netfangið þitt á Mínum síðum.',
+                },
+              },
+              {
+                component: 'Copy',
+                context: {
+                  small: true,
+                  copy:
+                    'This is your security code to verify your email address, it will be deleted automatically after 5 minutes. Please ignore this email if you did not enter your email address on My pages.',
+                },
+              },
+            ],
+          },
+        })
+      } catch (exception) {
+        this.logger.error(exception)
+      }
     }
   }
 
