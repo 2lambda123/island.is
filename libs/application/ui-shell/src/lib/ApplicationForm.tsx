@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useCallback } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 
 import { APPLICATION_APPLICATION } from '@island.is/application/graphql'
@@ -42,9 +42,6 @@ const ApplicationLoader: FC<{
   const [delegationsChecked, setDelegationsChecked] = useState(
     type ? false : true,
   )
-  const checkDelegation = useCallback(() => {
-    setDelegationsChecked((d) => !d)
-  }, [])
 
   const { lang: locale } = useLocale()
   const { data, error, loading, refetch } = useQuery(APPLICATION_APPLICATION, {
@@ -86,7 +83,7 @@ const ApplicationLoader: FC<{
         <DelegationsScreen
           slug={slug}
           alternativeSubjects={foundError.alternativeSubjects}
-          checkDelegation={checkDelegation}
+          checkDelegation={setDelegationsChecked}
         />
       )
     }
