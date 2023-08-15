@@ -163,7 +163,9 @@ export const AdgerdirArticles: FC<AdgerdirArticlesProps> = ({
 
   useEffect(() => {
     onUpdateFilters()
-    return () => clearTimeout(timerRef.current)
+    return () => {
+      clearTimeout(timerRef.current)
+    }
   }, [onUpdateFilters])
 
   const filteredItems = visibleItems.filter((_, index) => {

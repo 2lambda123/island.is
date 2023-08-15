@@ -83,7 +83,9 @@ export const CardsSlider: FC<CardsSliderProps> = ({ items, variant }) => {
       setTimeout(handleResize, 0)
     }
 
-    return () => window.removeEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   }, [handleResize])
 
   const slideNext = () => {
