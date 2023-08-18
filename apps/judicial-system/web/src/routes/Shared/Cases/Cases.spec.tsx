@@ -515,7 +515,11 @@ describe('Cases', () => {
         </MockedProvider>,
       )
 
+<<<<<<< HEAD
       await user.dblClick(await screen.findByTestId('createdAtSortButton'))
+=======
+      userEvent.dblClick(await screen.findByTestId('createdAtSortButton'))
+>>>>>>> feature/university-gateway
 
       const tableRows = await screen.findAllByTestId('custody-cases-table-row')
 
