@@ -34,7 +34,6 @@ import { UNIVERSITY_GATEWAY_BASE_URL } from '@island.is/web/constants'
 import axios from 'axios'
 
 const ITEMS_PER_PAGE = 8
-const NUMBER_OF_FILTERS = 6
 
 interface UniversitySearchProps {
   mockData: any
@@ -127,7 +126,6 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
   const handleCheckbox = (e, id) => {
     console.log('e', e)
     e.preventDefault()
-    e.stopPropagation()
     if (selectedComparison.indexOf(id) === -1) {
       setSelectedComparison([...selectedComparison, id])
     } else {
@@ -142,41 +140,6 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
     }
   }
 
-  const predefinedFilterOpenings = []
-  for (var x = 0; x < NUMBER_OF_FILTERS; x++) {
-    predefinedFilterOpenings.push(true)
-  }
-
-  const [isOpen, setIsOpen] = useState<Array<boolean>>(predefinedFilterOpenings)
-
-  const toggleIsOpen = (index: number, value: boolean) => {
-    const newIsOpen = isOpen.map((x, i) => {
-      if (i === index) {
-        return value
-      } else return x
-    })
-
-    setIsOpen(newIsOpen)
-  }
-
-  const toggleOpenAll = () => {
-    setIsOpen(predefinedFilterOpenings)
-  }
-
-  const toggleCloseAll = () => {
-    const newIsOpen = isOpen.map((x) => {
-      return false
-    })
-    setIsOpen(newIsOpen)
-  }
-
-  const checkboxEventHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    filterKey: string,
-  ) => {
-    handleFilters(filterKey, e.target.value)
-  }
-
   return (
     <GridContainer>
       <Box display="flex" flexDirection="row" columnGap={15}>
@@ -187,30 +150,17 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
           flexDirection="column"
         >
           <Box display="inline" marginBottom={3}>
-            <Text title="Sía niðurstöður" variant="h3">
-              Sía leitarniðurstöður
-            </Text>
+            <Button variant="utility" icon="filter">
+              Sía niðurstöður
+            </Button>
           </Box>
           <Box
             display="inline"
             style={{ alignSelf: 'flex-end' }}
             marginBottom={1}
           >
-            <Button
-              variant="text"
-              icon="add"
-              size="small"
-              onClick={() =>
-                isOpen.filter((x) => x === false).length > 0
-                  ? toggleOpenAll()
-                  : toggleCloseAll()
-              }
-            >
-              {`${
-                isOpen.filter((x) => x === false).length > 0
-                  ? 'opna allar síur'
-                  : 'loka öllum síum'
-              }`}
+            <Button variant="text" icon="add" size="small">
+              Opna allar síur
             </Button>
           </Box>
           <Accordion
@@ -224,18 +174,10 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
               labelUse="h5"
               labelVariant="h5"
               iconVariant="small"
-              expanded={isOpen[0]}
-              onToggle={() => toggleIsOpen(0, !isOpen[0])}
+              startExpanded
             >
               <Stack space={[1, 1, 2]}>
-                <Checkbox
-                  label="Opið fyrir umsóknir"
-                  value="open"
-                  checked={
-                    filters.applications.filter((x) => x === 'open').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'applications')}
-                />
+                <Checkbox label="Opið fyrir umsóknir" value="open" />
               </Stack>
               <Box
                 display="flex"
@@ -244,12 +186,7 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
                 justifyContent="flexEnd"
                 marginTop={1}
               >
-                <Button
-                  variant="text"
-                  icon="reload"
-                  size="small"
-                  onClick={() => setFilters({ ...filters, applications: [] })}
-                >
+                <Button variant="text" icon="reload" size="small">
                   Hreinsa val
                 </Button>
               </Box>
@@ -261,52 +198,14 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
               labelUse="h5"
               labelVariant="h5"
               iconVariant="small"
-              expanded={isOpen[1]}
-              onToggle={() => toggleIsOpen(1, !isOpen[1])}
+              startExpanded
             >
               <Stack space={[1, 1, 1]}>
-                <Checkbox
-                  label="Grunndiplóma"
-                  value="diploma"
-                  checked={
-                    filters.studyLevel.filter((x) => x === 'diploma').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'studyLevel')}
-                />
-                <Checkbox
-                  label="Grunnnám"
-                  value="undergrad"
-                  checked={
-                    filters.studyLevel.filter((x) => x === 'undergrad').length >
-                    0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'studyLevel')}
-                />
-                <Checkbox
-                  label="Viðbótardiplóma"
-                  value="additionalDiploma"
-                  checked={
-                    filters.studyLevel.filter((x) => x === 'additionalDiploma')
-                      .length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'studyLevel')}
-                />
-                <Checkbox
-                  label="Meistaranám"
-                  value="masters"
-                  checked={
-                    filters.studyLevel.filter((x) => x === 'masters').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'studyLevel')}
-                />
-                <Checkbox
-                  label="Doktorsnám"
-                  value="doctors"
-                  checked={
-                    filters.studyLevel.filter((x) => x === 'doctors').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'studyLevel')}
-                />
+                <Checkbox label="Grunndiplóma" value="diploma" />
+                <Checkbox label="Grunnnám" value="undergrad" />
+                <Checkbox label="Viðbótardiplóma" value="additionalDiploma" />
+                <Checkbox label="Meistaranám" value="masters" />
+                <Checkbox label="Doktorsnám" value="doctors" />
               </Stack>
               <Box
                 display="flex"
@@ -315,12 +214,7 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
                 justifyContent="flexEnd"
                 marginTop={1}
               >
-                <Button
-                  variant="text"
-                  icon="reload"
-                  size="small"
-                  onClick={() => setFilters({ ...filters, studyLevel: [] })}
-                >
+                <Button variant="text" icon="reload" size="small">
                   Hreinsa val
                 </Button>
               </Box>
@@ -332,26 +226,11 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
               labelUse="h5"
               labelVariant="h5"
               iconVariant="small"
-              expanded={isOpen[2]}
-              onToggle={() => toggleIsOpen(2, !isOpen[2])}
+              startExpanded
             >
               <Stack space={[1, 1, 2]}>
-                <Checkbox
-                  label="Haustmisseri"
-                  value="fall"
-                  checked={
-                    filters.studyTime.filter((x) => x === 'fall').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'studyTime')}
-                />
-                <Checkbox
-                  label="Vormisseri"
-                  value="spring"
-                  checked={
-                    filters.studyTime.filter((x) => x === 'spring').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'studyTime')}
-                />
+                <Checkbox label="Haustmisseri" value="fall" />
+                <Checkbox label="Vormisseri" value="spring" />
               </Stack>
               <Box
                 display="flex"
@@ -360,12 +239,7 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
                 justifyContent="flexEnd"
                 marginTop={1}
               >
-                <Button
-                  variant="text"
-                  icon="reload"
-                  size="small"
-                  onClick={() => setFilters({ ...filters, studyTime: [] })}
-                >
+                <Button variant="text" icon="reload" size="small">
                   Hreinsa val
                 </Button>
               </Box>
@@ -377,42 +251,12 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
               labelUse="h5"
               labelVariant="h5"
               iconVariant="small"
-              expanded={isOpen[3]}
-              onToggle={() => toggleIsOpen(3, !isOpen[3])}
             >
               <Stack space={[1, 1, 2]}>
-                <Checkbox
-                  label="Staðnám"
-                  value="onSite"
-                  checked={
-                    filters.typeOfStudy.filter((x) => x === 'onSite').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'typeOfStudy')}
-                />
-                <Checkbox
-                  label="Fjarnám"
-                  value="away"
-                  checked={
-                    filters.typeOfStudy.filter((x) => x === 'away').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'typeOfStudy')}
-                />
-                <Checkbox
-                  label="Blandað nám"
-                  value="mixed"
-                  checked={
-                    filters.typeOfStudy.filter((x) => x === 'mixed').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'typeOfStudy')}
-                />
-                <Checkbox
-                  label="Dreifinám"
-                  value="spread"
-                  checked={
-                    filters.typeOfStudy.filter((x) => x === 'spread').length > 0
-                  }
-                  onChange={(e) => checkboxEventHandler(e, 'typeOfStudy')}
-                />
+                <Checkbox label="Staðnám" value="onSite" />
+                <Checkbox label="Fjarnám" value="away" />
+                <Checkbox label="Blandað nám" value="mixed" />
+                <Checkbox label="Dreifinám" value="spread" />
               </Stack>
               <Box
                 display="flex"
@@ -421,12 +265,59 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
                 justifyContent="flexEnd"
                 marginTop={1}
               >
-                <Button
-                  variant="text"
-                  icon="reload"
-                  size="small"
-                  onClick={() => setFilters({ ...filters, typeOfStudy: [] })}
-                >
+                <Button variant="text" icon="reload" size="small">
+                  Hreinsa val
+                </Button>
+              </Box>
+            </AccordionItem>
+            <AccordionItem
+              id="mini_accordion6"
+              label="Námssvið"
+              labelUse="h5"
+              labelVariant="h5"
+              iconVariant="small"
+            >
+              <Stack space={[1, 1, 2]}>
+                <Checkbox label="Grunndiplóma" />
+                <Checkbox label="Grunnnám" />
+                <Checkbox label="Viðbótardiplóma" />
+                <Checkbox label="Meistaranám" />
+                <Checkbox label="Doktorsnám" />
+              </Stack>
+              <Box
+                display="flex"
+                width="full"
+                flexDirection="row"
+                justifyContent="flexEnd"
+                marginTop={1}
+              >
+                <Button variant="text" icon="reload" size="small">
+                  Hreinsa val
+                </Button>
+              </Box>
+            </AccordionItem>
+            <AccordionItem
+              id="mini_accordion5"
+              label="Háskólar"
+              labelUse="h5"
+              labelVariant="h5"
+              iconVariant="small"
+            >
+              <Stack space={[1, 1, 2]}>
+                <Checkbox label="Grunndiplóma" />
+                <Checkbox label="Grunnnám" />
+                <Checkbox label="Viðbótardiplóma" />
+                <Checkbox label="Meistaranám" />
+                <Checkbox label="Doktorsnám" />
+              </Stack>
+              <Box
+                display="flex"
+                width="full"
+                flexDirection="row"
+                justifyContent="flexEnd"
+                marginTop={1}
+              >
+                <Button variant="text" icon="reload" size="small">
                   Hreinsa val
                 </Button>
               </Box>
@@ -441,12 +332,7 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
             justifyContent="center"
             style={{ height: 72 }}
           >
-            <Button
-              variant="text"
-              icon="reload"
-              size="small"
-              onClick={() => setFilters(intialFilters)}
-            >
+            <Button variant="text" icon="reload" size="small">
               Hreinsa allar síur
             </Button>
           </Box>
@@ -517,7 +403,7 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
             marginTop={5}
             marginBottom={5}
           >
-            <Text variant="intro">{`${mockData.length} Leitarniðurstöður`}</Text>
+            <Text variant="intro">8 Leitarniðurstöður</Text>
             <Box>
               <button
                 onClick={() => setGridView(true)}
@@ -554,7 +440,6 @@ const UniversitySearch: Screen<UniversitySearchProps> = ({
                         text={dataItem.text}
                         tags={getTags()}
                         icon={<img src={dataItem.iconSrc} />}
-                        component={Button}
                         sidePanelConfig={{
                           cta: createPrimaryCTA(),
                           onCheck: (e) => handleCheckbox(e, dataItem.id),
