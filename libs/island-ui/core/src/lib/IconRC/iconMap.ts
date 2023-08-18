@@ -68,8 +68,12 @@ export type Icon =
   | 'share'
   | 'QRCode'
   | 'globe'
+<<<<<<< HEAD
   | 'gridView'
   | 'listView'
+=======
+  | 'signLanguage'
+>>>>>>> 5294cdcff0 (feat(web): Add sign language button option to web (#11801))
 
 export default {
   filled: {
@@ -141,8 +145,12 @@ export default {
     share: 'Share',
     QRCode: 'QRCodeOutline',
     globe: 'Globe',
+<<<<<<< HEAD
     gridView: 'GridView',
     listView: 'ListView',
+=======
+    signLanguage: 'SignLanguage',
+>>>>>>> 5294cdcff0 (feat(web): Add sign language button option to web (#11801))
   },
   outline: {
     accessibility: 'AccessibilityOutline',
@@ -215,5 +223,6 @@ export default {
     globe: 'Globe',
     gridView: 'GridView',
     listView: 'ListView',
+    signLanguage: 'SignLanguage',
   },
 }
