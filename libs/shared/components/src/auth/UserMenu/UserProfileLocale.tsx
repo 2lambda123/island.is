@@ -12,7 +12,7 @@ import { useGetUserProfileLocaleLazyQuery } from '../../../gen/graphql'
  * language should be fetched by the auth server and returned
  * with the userInfo token in the future.
  */
-export const UserProfileLocale = () => {
+export const UserProfileLocale = (): null => {
   const { changeLanguage } = useNamespaces()
   const { lang } = useLocale()
   const { userInfo } = useAuth()

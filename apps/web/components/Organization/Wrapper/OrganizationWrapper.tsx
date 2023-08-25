@@ -342,7 +342,7 @@ export const OrganizationExternalLinks: React.FC<
               >
                 <Button
                   as="a"
-                  variant={variant}
+                  variant={variant as 'primary' | 'ghost'}
                   icon={isSjukratryggingar ? 'lockClosed' : 'open'}
                   iconType="outline"
                   size="medium"

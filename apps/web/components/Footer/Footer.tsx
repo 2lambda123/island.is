@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { theme } from '@island.is/island-ui/theme'
 import {
@@ -57,7 +58,10 @@ export const Footer = ({ imageUrl, heading, columns }: FooterProps) => {
                       )}
                       {webRichText((column?.content ?? []) as SliceType[], {
                         renderNode: {
-                          [BLOCKS.PARAGRAPH]: (_node, children) => {
+                          [BLOCKS.PARAGRAPH]: (
+                            _node: any,
+                            children: ReactNode,
+                          ) => {
                             return (
                               <Text variant="medium" marginBottom={1}>
                                 {children}

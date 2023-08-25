@@ -7,6 +7,7 @@ import { webRichText } from '@island.is/web/utils/richText'
 
 import * as styles from './LandingPageFooter.css'
 import { ReactNode } from 'react'
+import { UrlObject } from 'url'
 
 interface LandingPageFooterProps {
   footerItems?: FooterItem[]
@@ -34,7 +35,10 @@ const LandingPageFooter: React.FC<
                 {item.content?.length &&
                   webRichText(item.content as SliceType[], {
                     renderNode: {
-                      [INLINES.HYPERLINK]: (node, children: ReactNode) => (
+                      [INLINES.HYPERLINK]: (
+                        node: { data: { uri: string | UrlObject } },
+                        children: ReactNode,
+                      ) => (
                         <Link
                           underlineVisibility="always"
                           underline="small"

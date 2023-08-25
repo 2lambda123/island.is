@@ -12,7 +12,7 @@ const wrapTranslations = <T extends { [key: string]: string }>(
   translations: T,
 ): T => {
   if (process.env.NODE_ENV === 'development' && typeof Proxy !== 'undefined') {
-    const warnedKeys = {}
+    const warnedKeys: Record<string, boolean> = {}
     return new Proxy(translations, {
       get(target: T, p: string): string {
         if (p in target) {

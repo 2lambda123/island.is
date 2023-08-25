@@ -26,7 +26,7 @@ export const createCurrentUser = (user: UserOptions = {}): User => {
     ((!Array.isArray(user.delegationType)
       ? [user.delegationType]
       : user.delegationType) as AuthDelegationType[])
-  const actor =
+  const actor: { nationalId: string; scope: string[] } | undefined =
     delegationType || user.actor
       ? { nationalId: createNationalId('person'), scope: [], ...user.actor }
       : undefined
