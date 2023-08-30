@@ -41,15 +41,6 @@ import {
   GenericDisabilityLicenseService,
 } from './client/disability-license-client'
 import { GenericDrivingLicenseModule } from './client/driving-license-client/genericDrivingLicense.module'
-import { OldGenericDrivingLicenseModule } from './client/old-driving-license-client/oldGenericDrivingLicense.module'
-import { OldGenericDrivingLicenseApi } from './client/old-driving-license-client'
-import { DriversLicenseClientTypes } from './licenceService.type'
-import {
-  FeatureFlagModule,
-  FeatureFlagService,
-  Features,
-} from '@island.is/nest/feature-flags'
-import { User } from '@island.is/auth-nest-tools'
 
 export const AVAILABLE_LICENSES: GenericLicenseMetadata[] = [
   {
@@ -107,12 +98,10 @@ export const AVAILABLE_LICENSES: GenericLicenseMetadata[] = [
   imports: [
     CacheModule.register(),
     GenericDrivingLicenseModule,
-    OldGenericDrivingLicenseModule,
     GenericFirearmLicenseModule,
     GenericAdrLicenseModule,
     GenericMachineLicenseModule,
     GenericDisabilityLicenseModule,
-    FeatureFlagModule,
     CmsModule,
   ],
   providers: [
@@ -157,32 +146,13 @@ export const AVAILABLE_LICENSES: GenericLicenseMetadata[] = [
           genericMachineService: GenericMachineLicenseService,
           genericDisabilityService: GenericDisabilityLicenseService,
           genericDrivingService: GenericDrivingLicenseService,
-          oldGenericDrivingLicenseApi: OldGenericDrivingLicenseApi,
-          featureFlagService: FeatureFlagService,
         ) =>
         async (
           type: GenericLicenseType,
-          user: User,
-          forceSpecificDriversLicenseClient?: DriversLicenseClientTypes,
         ): Promise<GenericLicenseClient<unknown> | null> => {
-          //option for forcing a client since verify is a big pain
-          if (forceSpecificDriversLicenseClient) {
-            return forceSpecificDriversLicenseClient === 'old'
-              ? oldGenericDrivingLicenseApi
-              : genericDrivingService
-          }
-
-          const isNewDriversLicenseEnabled = await featureFlagService.getValue(
-            Features.licenseServiceDrivingLicenseClient,
-            false,
-            user,
-          )
-
           switch (type) {
             case GenericLicenseType.DriversLicense:
-              return isNewDriversLicenseEnabled
-                ? genericDrivingService
-                : oldGenericDrivingLicenseApi
+              return genericDrivingService
             case GenericLicenseType.AdrLicense:
               return genericAdrService
             case GenericLicenseType.MachineLicense:
@@ -202,8 +172,6 @@ export const AVAILABLE_LICENSES: GenericLicenseMetadata[] = [
         GenericMachineLicenseService,
         GenericDisabilityLicenseService,
         GenericDrivingLicenseService,
-        OldGenericDrivingLicenseApi,
-        FeatureFlagService,
       ],
     },
   ],

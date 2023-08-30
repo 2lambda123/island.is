@@ -23,8 +23,6 @@ import {
   GenericUserLicensePkPassStatus,
   GenericUserLicenseStatus,
   PkPassVerification,
-  PkPassVerificationError,
-  PkPassVerificationInputData,
 } from '../../licenceService.type'
 import { Locale } from '@island.is/shared/types'
 import { PkPassClient } from './pkpass.client'
@@ -175,15 +173,7 @@ export class GenericDrivingLicenseService
 
   async verifyPkPass(data: string): Promise<PkPassVerification | null> {
     const parsedInput = JSON.parse(data)
-
-    const { code, date } = parsedInput as PkPassVerificationInputData
-    const { passTemplateId } = parsedInput
-
-    if (!passTemplateId) {
-      return this.verifyPkPassV1(data)
-    }
-
-    const result = await this.smartApi.verifyPkPass({ code, date })
+    const result = await this.smartApi.verifyPkPass(parsedInput)
 
     if (!result) {
       this.logger.warn('Missing pkpass verify from client', {
@@ -235,84 +225,6 @@ export class GenericDrivingLicenseService
         photo,
         rawData,
       }),
-    }
-  }
-
-  private async verifyPkPassV1(
-    data: string,
-  ): Promise<PkPassVerification | null> {
-    const result = await this.pkpassClient.verifyPkpassByPdf417(data)
-
-    if (!result) {
-      this.logger.warn('Missing pkpass verify from client', {
-        category: LOG_CATEGORY,
-      })
-      return null
-    }
-
-    let error: PkPassVerificationError | undefined
-
-    if (result.error) {
-      let data = ''
-
-      try {
-        data = JSON.stringify(result.error.serviceError?.data)
-      } catch {
-        // noop
-      }
-
-      // Is there a status code from the service?
-      const serviceErrorStatus = result.error.serviceError?.status
-
-      // Use status code, or http status code from serivce, or "0" for unknown
-      const status = serviceErrorStatus ?? (result.error.statusCode || 0)
-
-      error = {
-        status: status.toString(),
-        message: result.error.serviceError?.message || 'Unknown error',
-        data,
-      }
-
-      return {
-        valid: false,
-        data: undefined,
-        error,
-      }
-    }
-
-    let response
-
-    if (result.nationalId) {
-      const nationalId = result.nationalId.replace('-', '')
-      const license = await this.drivingApi.getCurrentLicenseV4({
-        nationalId: nationalId,
-      })
-
-      if (!license) {
-        error = {
-          status: '0',
-          message: 'missing license',
-        }
-      }
-
-      const licenseNationalId = license?.socialSecurityNumber
-      const name = license?.name
-      const photo = license?.photo?.image ?? ''
-
-      const rawData = license ? JSON.stringify(license) : undefined
-
-      response = {
-        nationalId: licenseNationalId,
-        name,
-        photo,
-        rawData,
-      }
-    }
-
-    return {
-      valid: result.valid,
-      data: response ? JSON.stringify(response) : undefined,
-      error,
     }
   }
 }
