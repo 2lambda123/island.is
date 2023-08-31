@@ -116,6 +116,7 @@ const ChildView: FC<React.PropsWithChildren<Props>> = ({
               defaultMessage:
                 'Hér fyrir neðan eru gögn um fjölskyldumeðlim. Þú hefur kost á að gera breytingar á eftirfarandi upplýsingum ef þú kýst.',
             }}
+            translateTitle={false}
           />
         </Box>
       )}

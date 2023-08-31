@@ -16,6 +16,7 @@ export interface IntroHeaderProps {
   intro?: MessageDescriptor | string
   img?: string
   hideImgPrint?: boolean
+  translateTitle?: boolean
   marginBottom?: BoxProps['marginBottom']
   children?: React.ReactNode
 }
@@ -25,6 +26,7 @@ export const IntroHeader = ({
   intro,
   img,
   hideImgPrint = false,
+  translateTitle = true,
   marginBottom = 6,
   children,
 }: IntroHeaderProps) => {
@@ -33,7 +35,7 @@ export const IntroHeader = ({
   return (
     <GridRow marginBottom={marginBottom}>
       <GridColumn span={['8/8', '5/8']}>
-        <Text variant="h3" as="h1">
+        <Text variant="h3" as="h1" translate={translateTitle ? 'yes' : 'no'}>
           {formatMessage(title)}
         </Text>
         {intro && (
