@@ -434,7 +434,7 @@
     "nx": "13.10.3",
     "prettier": "2.2.1",
     "quicktype": "15.0.258",
-    "react-test-renderer": "17.0.2",
+    "react-test-renderer": "18.2.0",
     "sequelize-cli": "6.4.1",
     "sort-paths": "1.1.1",
     "sqlite3": "5.0.8",
