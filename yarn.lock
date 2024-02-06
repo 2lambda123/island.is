@@ -6265,10 +6265,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gperdomor/nx-docker@npm:0.2.3":
-  version: 0.2.3
-  resolution: "@gperdomor/nx-docker@npm:0.2.3"
-  checksum: bf8dfe89d00c99bd6839bb94ca97499705d007725849c5c37adc0e0953aa3b3d448f6b9dedf659a4822f04d55f193583b5ffb92232fdce0218870f0fa3fdb507
+"@gperdomor/nx-docker@npm:0.3.3":
+  version: 0.3.3
+  resolution: "@gperdomor/nx-docker@npm:0.3.3"
+  checksum: 9185be53240c6277e6a542bc9b94a76d9c354482e9b8827153de060987be70a9f14d5c30241d38be305efd1eefe5e71bd92908e36b794be17dfdb6c45ab43374
   languageName: node
   linkType: hard
 
@@ -28594,7 +28594,7 @@ __metadata:
     "@formatjs/intl-datetimeformat": 4.1.6
     "@formatjs/intl-locale": 2.4.33
     "@formatjs/intl-numberformat": 7.1.5
-    "@gperdomor/nx-docker": 0.2.3
+    "@gperdomor/nx-docker": 0.3.3
     "@graphql-codegen/cli": 2.12.0
     "@graphql-codegen/fragment-matcher": 3.3.1
     "@graphql-codegen/near-operation-file-preset": ^2.4.4
