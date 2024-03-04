@@ -15713,15 +15713,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server-cache-redis@npm:1.2.1":
-  version: 1.2.1
-  resolution: "apollo-server-cache-redis@npm:1.2.1"
+"apollo-server-cache-redis@npm:3.3.1":
+  version: 3.3.1
+  resolution: "apollo-server-cache-redis@npm:3.3.1"
   dependencies:
-    apollo-server-caching: ^0.5.1
-    apollo-server-env: ^2.4.4
+    apollo-server-caching: ^3.3.0
+    apollo-server-env: ^4.2.1
     dataloader: ^2.0.0
-    ioredis: ^4.0.0
-  checksum: b5e393514804d2539d3fd7fb52e91a8525b90fb7bcb43a7d2ca919dcc258ac043d14744c1277ef2d6dbba4a2b5129bf3822902d945ee697daae29eb6768723da
+    ioredis: ^4.17.3
+  checksum: dd273ea768048b3aa3189c35c1eea1807eef6ac8c0eee5fba33e612292aee186e87565394f660194a0bad343db4c66ce1b299c6d3432e14b80e526cbdba212fe
   languageName: node
   linkType: hard
 
@@ -15731,6 +15731,15 @@ __metadata:
   dependencies:
     lru-cache: ^6.0.0
   checksum: e4261b91e9c4dc781de410932933b6db7dac3072de9f1254012290456bdc422b2ca5eb382bc8b66df80f032bad1446e6e3f480b7fcc441cf37f4d2d6415c3c15
+  languageName: node
+  linkType: hard
+
+"apollo-server-caching@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "apollo-server-caching@npm:3.3.0"
+  dependencies:
+    lru-cache: ^6.0.0
+  checksum: a5b43025ffb00cb3899fa0584512538747e8afe595ff8a0235caf8469435a03c1edc23fa56893fc77910f032563106872faa7e86a58acf1aed16bf77e9723327
   languageName: node
   linkType: hard
 
@@ -27633,7 +27642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ioredis@npm:4.28.5, ioredis@npm:^4.0.0, ioredis@npm:^4.14.1":
+"ioredis@npm:4.28.5, ioredis@npm:^4.14.1, ioredis@npm:^4.17.3":
   version: 4.28.5
   resolution: "ioredis@npm:4.28.5"
   dependencies:
@@ -28736,7 +28745,7 @@ __metadata:
     apollo-link-http: 1.5.17
     apollo-link-http-common: 0.2.16
     apollo-link-retry: 2.2.16
-    apollo-server-cache-redis: 1.2.1
+    apollo-server-cache-redis: 3.3.1
     apollo-server-env: 2.4.5
     apollo-server-express: 3.13.0
     apollo-server-plugin-base: 0.9.0
